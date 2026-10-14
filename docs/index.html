@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBM Bob Academic Integrity & Student Development Framework</title>
+  <style>
+    :root {
+      --ibm-blue-60: #0f62fe;
+      --ibm-blue-70: #0043ce;
+      --ibm-blue-10: #edf5ff;
+      --ibm-blue-20: #d0e2ff;
+      --ibm-gray-10: #f4f4f4;
+      --ibm-gray-20: #e0e0e0;
+      --ibm-gray-80: #393939;
+      --ibm-gray-100: #161616;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      line-height: 1.6;
+      color: var(--ibm-gray-100);
+      background-color: #fbfbfb;
+      display: flex;
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 280px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      border-right: 1px solid var(--ibm-gray-20);
+      padding: 2rem 1.5rem;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--ibm-blue-60);
+    }
+
+    .sidebar p.subtitle {
+      font-size: 0.8rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--ibm-gray-20);
+      padding-bottom: 1rem;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: var(--ibm-gray-80);
+      font-size: 0.9rem;
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: var(--ibm-blue-10);
+      color: var(--ibm-blue-70);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      max-width: 960px;
+      padding: 3rem 4rem;
+      margin: 0 auto;
+    }
+
+    header.hero {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--ibm-gray-20);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--ibm-blue-10);
+      color: var(--ibm-blue-70);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--ibm-gray-100);
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+    }
+
+    p.lead {
+      font-size: 1.1rem;
+      color: #525252;
+    }
+
+    section {
+      margin-bottom: 3.5rem;
+    }
+
+    h2.section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ibm-gray-100);
+      border-left: 4px solid var(--ibm-blue-60);
+      padding-left: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.75rem 0;
+      color: var(--ibm-gray-80);
+    }
+
+    p, li {
+      font-size: 0.95rem;
+      color: #333333;
+      margin-bottom: 0.8rem;
+    }
+
+    ul, ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--ibm-gray-20);
+      border-radius: 6px;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .card h4 {
+      font-size: 1rem;
+      color: var(--ibm-blue-70);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 0;
+    }
+
+    /* Workflow Diagram Box */
+    .diagram-container {
+      background: #ffffff;
+      border: 1px solid var(--ibm-gray-20);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--ibm-gray-10);
+      border-radius: 6px;
+      border-left: 4px solid var(--ibm-blue-60);
+    }
+
+    .step-number {
+      background: var(--ibm-blue-60);
+      color: white;
+      font-weight: bold;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 0;
+    }
+
+    /* Code Blocks */
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.85em;
+      background-color: var(--ibm-gray-10);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      color: #c7254e;
+    }
+
+    pre code {
+      background-color: transparent;
+      padding: 0;
+      color: inherit;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: #ffffff;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--ibm-gray-20);
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--ibm-gray-20);
+    }
+
+    th {
+      background-color: var(--ibm-gray-10);
+      font-weight: 600;
+      color: var(--ibm-gray-100);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Callout */
+    .callout {
+      background-color: var(--ibm-blue-10);
+      border-left: 4px solid var(--ibm-blue-60);
+      padding: 1rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1.5rem 0;
+    }
+
+    .callout h4 {
+      font-size: 0.95rem;
+      color: var(--ibm-blue-70);
+      margin-bottom: 0.25rem;
+    }
+
+    .callout p {
+      font-size: 0.85rem;
+      color: #333;
+      margin-bottom: 0;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--ibm-gray-20);
+      text-align: center;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--ibm-gray-20);
+      }
+      .main-content {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Sidebar -->
+  <nav class="sidebar">
+    <h2>IBM Bob</h2>
+    <p class="subtitle">Academic Framework & Provenance</p>
+    <ul>
+      <li><a href="#overview">1. System Overview</a></li>
+      <li><a href="#student-workflow">2. Student Workflow</a></li>
+      <li><a href="#custom-mode">3. 'Student Developer' Mode</a></li>
+      <li><a href="#skills">4. Integrated Skills</a></li>
+      <li><a href="#rules-watermarks">5. Rules & Watermarks</a></li>
+      <li><a href="#deployment">6. Deployment (ZIP / Git / LMS)</a></li>
+      <li><a href="#verification">7. Instructor Verification</a></li>
+      <li><a href="#structure">8. Project Structure</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Documentation -->
+  <main class="main-content">
+    <header class="hero">
+      <span class="badge">Education & Integrity Framework</span>
+      <h1>IBM Bob for Students & Academic Projects</h1>
+      <p class="lead">A complete architecture for deploying IBM Bob to students across all courses and general development, enforcing academic attribution, logging prompt histories, and verifying code provenance without requiring Git.</p>
+    </header>
+
+    <!-- Section 1: Overview -->
+    <section id="overview">
+      <h2 class="section-title">1. System Overview & The Core Challenge</h2>
+      <p>When providing <strong>IBM Bob Free Trial</strong> accounts to college students, administrative dashboards (such as Enterprise Bobalytics) are unavailable. Standard code generated by any AI is standard plain-text without embedded cryptographic signatures.</p>
+      <p>This framework establishes a <strong>workspace architecture</strong> that runs directly inside the student's local IDE to guarantee:</p>
+
+      <div class="cards-grid">
+        <div class="card">
+          <h4>🏷️ Mandatory Watermarking</h4>
+          <p>Every file generated or edited with Bob automatically receives a standardized academic header comment.</p>
+        </div>
+        <div class="card">
+          <h4>💬 Prompt History Capture</h4>
+          <p>All student prompts, questions, and reasoning are continuously recorded into <code>PROMPT_HISTORY.md</code>.</p>
+        </div>
+        <div class="card">
+          <h4>📑 Audit Trail Logging</h4>
+          <p>Architectural decisions, algorithms chosen, and unit test results are recorded in <code>AI_AUDIT_TRAIL.md</code>.</p>
+        </div>
+        <div class="card">
+          <h4>📦 Flexible Submissions</h4>
+          <p>Works seamlessly with ZIP archives, LMS folder uploads, direct file transfers, or Git.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Student Workflow -->
+    <section id="student-workflow">
+      <h2 class="section-title">2. Student Step-by-Step Workflow</h2>
+      <p>The student experience is designed to be seamless, interactive, and transparent across any course or project:</p>
+
+      <div class="diagram-container">
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Open Project & Fill Profile</h4>
+              <p>Student opens the folder in VS Code with IBM Bob, and fills in their Name and ID in <code>STUDENT_INFO.json</code>.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Select Mode: 🎓 Student Developer</h4>
+              <p>In the Bob chat panel mode dropdown, student selects <code>student-dev</code> mode. This activates Socratic mentoring and provenance tracking.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Interactive Coding & Automated Tracking</h4>
+              <p>Student prompts Bob for assistance. Bob explains concepts, writes clean code with attribution headers, and logs prompts to <code>PROMPT_HISTORY.md</code>.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Package & Verify Submission</h4>
+              <p>Student runs <code>/package-submission</code> in Bob chat. Bob verifies all files, checks audit logs, and generates <code>SUBMISSION_REPORT.md</code>.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>Submit via LMS / ZIP / Folder</h4>
+              <p>Student uploads their project folder or ZIP archive directly to the course LMS or instructor portal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Custom Mode -->
+    <section id="custom-mode">
+      <h2 class="section-title">3. Custom Mode: 'Student Developer' (<code>student-dev</code>)</h2>
+      <p>Configured in <code>.bob/custom_modes.yaml</code>, this mode guides students as an academic programming mentor:</p>
+      <ul>
+        <li><strong>Socratic Guidance:</strong> Explains logic, data structures, and trade-offs before generating code.</li>
+        <li><strong>Enforced Watermarking:</strong> Ensures generated code includes student metadata and Bob provenance.</li>
+        <li><strong>Automatic Logging:</strong> Keeps <code>PROMPT_HISTORY.md</code> and <code>AI_AUDIT_TRAIL.md</code> continuously updated.</li>
+        <li><strong>Permission Groups:</strong> Granted <code>read</code>, <code>edit</code>, <code>execute</code>, <code>skill</code>, and <code>todo</code> tools.</li>
+      </ul>
+
+      <pre><code># .bob/custom_modes.yaml
+customModes:
+  - slug: student-dev
+    name: 🎓 Student Developer
+    description: General AI programming mentor for students using IBM Bob across all courses.
+    groups:
+      - read
+      - edit
+      - execute
+      - skill
+      - todo</code></pre>
+    </section>
+
+    <!-- Section 4: Integrated Skills -->
+    <section id="skills">
+      <h2 class="section-title">4. Integrated Skills Reference</h2>
+      <p>Skills provide structured, repeatable workflows accessible via slash commands:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Skill Command</th>
+            <th>Location</th>
+            <th>Purpose & What It Does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>/package-submission</code></td>
+            <td><code>.bob/skills/package-submission/</code></td>
+            <td>Runs <code>verify_submission.py</code>, audits watermark compliance, verifies prompt history, and produces <code>SUBMISSION_REPORT.md</code>.</td>
+          </tr>
+          <tr>
+            <td><code>/export-chat-history</code></td>
+            <td><code>.bob/skills/export-chat-history/</code></td>
+            <td>Formats and synchronizes active conversational prompts and Bob responses into <code>PROMPT_HISTORY.md</code>.</td>
+          </tr>
+          <tr>
+            <td><code>/log-activity</code></td>
+            <td><code>.bob/skills/log-activity/</code></td>
+            <td>Appends a structured milestone entry (objective, files, design rationale, test proof) to <code>AI_AUDIT_TRAIL.md</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section 5: Rules & Watermarks -->
+    <section id="rules-watermarks">
+      <h2 class="section-title">5. Workspace Rules & Watermarking Standards</h2>
+      <p>Defined in <code>.bob/rules/academic-attribution.md</code>, these rules load automatically on every Bob prompt without requiring manual student activation.</p>
+
+      <h3>Language-Specific Header Formats:</h3>
+      <pre><code>/*
+ * [IBM Bob Academic Attribution]
+ * Student Name: Jane Doe | Student ID: STU123456
+ * Course / Project: Computer Science / Coursework
+ * Generated/Assisted with: IBM Bob
+ * Timestamp: 2026-10-15 14:22:10
+ */</code></pre>
+    </section>
+
+    <!-- Section 6: Deployment Guide -->
+    <section id="deployment">
+      <h2 class="section-title">6. Deployment Guide for Instructors</h2>
+      <p>How to distribute this template to students:</p>
+
+      <div class="callout">
+        <h4>Option 1: Direct ZIP Archive / LMS Download (Recommended)</h4>
+        <p>1. Compress this folder into a `.zip` archive.<br>
+        2. Upload it to your course portal or LMS (Canvas, Blackboard, Moodle).<br>
+        3. Students extract and open the folder in VS Code. All Bob rules and modes load immediately upon startup.</p>
+      </div>
+
+      <div class="callout">
+        <h4>Option 2: Git Template / Classroom (Optional)</h4>
+        <p>If your course uses Git, host as a template repository on GitHub/GitLab. Students can clone it directly.</p>
+      </div>
+    </section>
+
+    <!-- Section 7: Verification -->
+    <section id="verification">
+      <h2 class="section-title">7. Instructor Verification & Evaluation</h2>
+      <p>When grading student submissions, follow this simple verification check:</p>
+
+      <ol>
+        <li><strong>Run Automated Verifier:</strong>
+          <pre><code>python3 .bob/skills/package-submission/verify_submission.py</code></pre>
+          Inspect the JSON output for <code>watermarked_files</code>, <code>prompt_history.prompt_count</code>, and <code>audit_trail.entry_count</code>.
+        </li>
+        <li><strong>Audit Prompt Progression (<code>PROMPT_HISTORY.md</code>):</strong>
+          Verify that student prompts show natural, stepwise inquiry and genuine problem-solving.
+        </li>
+        <li><strong>Audit Milestone Trail (<code>AI_AUDIT_TRAIL.md</code>):</strong>
+          Verify that key algorithms and tests were logged with clear technical rationale.
+        </li>
+      </ol>
+    </section>
+
+    <!-- Section 8: Structure -->
+    <section id="structure">
+      <h2 class="section-title">8. Clean Project Directory Structure</h2>
+      <p>In accordance with software engineering best practices, documentation and tooling are organized into dedicated directories:</p>
+
+      <pre><code>.
+├── .bob/                               # IBM Bob Configuration Root
+│   ├── custom_modes.yaml               # 🎓 'student-dev' Custom Mode
+│   ├── rules/                          # Automated Workspace Rules
+│   │   └── academic-attribution.md     # Watermark & Prompt Logging Rules
+│   └── skills/                         # Procedural Skills
+│       ├── package-submission/         # /package-submission workflow
+│       │   ├── SKILL.md
+│       │   └── verify_submission.py    # Python automated scanner
+│       ├── export-chat-history/        # /export-chat-history workflow
+│       │   └── SKILL.md
+│       └── log-activity/               # /log-activity workflow
+│           └── SKILL.md
+├── docs/                               # 📚 Complete Documentation Folder
+│   ├── index.html                      # Interactive HTML Documentation Guide
+│   ├── STUDENT_GUIDE.md                # Markdown Student Guide
+│   ├── INSTRUCTOR_GUIDE.md             # Markdown Instructor Deployment Guide
+│   └── ARCHITECTURE.md                 # Technical Architecture Reference
+├── STUDENT_INFO.json                   # Student Profile Metadata
+├── PROMPT_HISTORY.md                   # Complete Prompt & Chat History Log
+├── AI_AUDIT_TRAIL.md                   # Architectural Decisions & Milestones Log
+└── README.md                           # Main Project Entry Point</code></pre>
+    </section>
+
+    <footer>
+      <p>IBM Bob Academic Integrity & Student Development Framework • Built for University Education & Projects</p>
+    </footer>
+  </main>
+</body>
+</html>
